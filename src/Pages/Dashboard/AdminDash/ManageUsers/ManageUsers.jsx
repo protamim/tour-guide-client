@@ -13,7 +13,7 @@ const ManageUsers = () => {
   }
   
     const handleMakeAdmin = (user)=> {
-        axiosPublic.patch(`http://localhost:4000/users/admin/${user._id}`)
+        axiosPublic.patch(`https://bhraman-server.vercel.app/users/admin/${user._id}`)
         .then(res => {
             // console.log(res.data);
             refetch();
@@ -29,7 +29,7 @@ const ManageUsers = () => {
         })
     }
     const handleMakeTourGuide = (user)=> {
-        axiosPublic.patch(`http://localhost:4000/users/tour-guide/${user._id}`)
+        axiosPublic.patch(`https://bhraman-server.vercel.app/users/tour-guide/${user._id}`)
         .then(res => {
             // console.log(res.data);
             refetch();
