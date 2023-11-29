@@ -11,6 +11,7 @@ import AdminProfile from "../Pages/Dashboard/AdminDash/AdminProfile/AdminProfile
 import TourGuideProfile from "../Pages/Dashboard/TourGuideDash/TourGuideProfile/TourGuideProfile";
 import TouristProfile from "../Pages/Dashboard/TouristDash/TouristProfile/TouristProfile";
 import AddPackage from "../Pages/Dashboard/AdminDash/AddPackage/AddPackage";
+import PackageDetails from "../Pages/PackageDetails/PackageDetails";
 
 
 
@@ -31,6 +32,11 @@ const MainRoutes = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register />
+            },
+            {
+                path: '/package-details/:id',
+                element: <PackageDetails />,
+                loader: ({params})=> fetch(`http://localhost:4000/packages/${params.id}`)
             }
         ]
     },
