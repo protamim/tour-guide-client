@@ -64,7 +64,8 @@ const RegisterPage = () => {
             // console.log("Profile updated");
             const userInfo = {
               name: userName,
-              email: email
+              email: email,
+              photoURL: photo,
             }
             axiosPublic.post('/users', userInfo)
             .then(res => {

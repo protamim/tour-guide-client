@@ -1,16 +1,33 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import useLoadUsers from "../../Hooks/useLoadUsers";
+import {
+  FaEnvelope,
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaTwitter,
+} from "react-icons/fa";
+import Loading from "../../components/Loading";
 
 const PackageDetails = () => {
   const data = useLoaderData();
-  console.log(data);
+  const { users, isLoading } = useLoadUsers();
+  // Loading
+  if (isLoading) {
+    return <Loading />;
+  }
+  console.log(users);
+  const tourGuide = users.filter((guide) => guide.role === "tour guide");
+  console.log(tourGuide);
+
   return (
     <>
       <section className="my-16">
         <div className="container mx-auto px-5">
-          <h2 className="mb-6 text-3xl">{data.title}</h2>
           <div className="grid gap-8 grid-cols-12">
             {/* Main Content */}
             <div className="col-span-8">
+              <h2 className="mb-6 text-3xl">{data.title}</h2>
               <div className="flex gap-6">
                 <div className="flex-1">
                   <img src={data.image} alt="" />
@@ -37,51 +54,109 @@ const PackageDetails = () => {
                 {data.day1 && (
                   <>
                     <div className="space-y-2">
-                    <h3 className="bg-gray-300 px-3 py-1 inline-block">Day 1:</h3>
-                    <p>{data.day1}</p>
+                      <h3 className="bg-gray-300 px-3 py-1 inline-block">
+                        Day 1:
+                      </h3>
+                      <p>{data.day1}</p>
                     </div>
                   </>
                 )}
-                 {/* Day 2 */}
+                {/* Day 2 */}
                 {data.day2 && (
                   <>
                     <div className="space-y-2">
-                    <h3 className="bg-gray-300 px-3 py-1 inline-block">Day 2:</h3>
-                    <p>{data.day2}</p>
+                      <h3 className="bg-gray-300 px-3 py-1 inline-block">
+                        Day 2:
+                      </h3>
+                      <p>{data.day2}</p>
                     </div>
                   </>
                 )}
-                 {/* Day 3 */}
+                {/* Day 3 */}
                 {data.day3 && (
                   <>
                     <div className="space-y-2">
-                    <h3 className="bg-gray-300 px-3 py-1 inline-block">Day 3:</h3>
-                    <p>{data.day3}</p>
+                      <h3 className="bg-gray-300 px-3 py-1 inline-block">
+                        Day 3:
+                      </h3>
+                      <p>{data.day3}</p>
                     </div>
                   </>
                 )}
-                 {/* Day 4 */}
+                {/* Day 4 */}
                 {data.day4 && (
                   <>
                     <div className="space-y-2">
-                    <h3 className="bg-gray-300 px-3 py-1 inline-block">Day 4:</h3>
-                    <p>{data.day4}</p>
+                      <h3 className="bg-gray-300 px-3 py-1 inline-block">
+                        Day 4:
+                      </h3>
+                      <p>{data.day4}</p>
                     </div>
                   </>
                 )}
-                 {/* Day 5 */}
+                {/* Day 5 */}
                 {data.day5 && (
                   <>
                     <div className="space-y-2">
-                    <h3 className="bg-gray-300 px-3 py-1 inline-block">Day 5:</h3>
-                    <p>{data.day5}</p>
+                      <h3 className="bg-gray-300 px-3 py-1 inline-block">
+                        Day 5:
+                      </h3>
+                      <p>{data.day5}</p>
                     </div>
                   </>
                 )}
               </div>
             </div>
             {/* right sidebar */}
-            <div className="col-span-4"></div>
+            <div className="col-span-4 flex gap-8 items-end flex-col">
+              <h3 className="text-xl">Contact With Tour Guides</h3>
+              {/* Tour Guide Profle */}
+              {tourGuide.map((guide) => (
+                <div
+                  key={guide._id}
+                  className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100"
+                >
+                  <Link to={"#"}>
+                    <img
+                      src={
+                        guide.photoURL
+                          ? guide.photoURL
+                          : "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
+                      }
+                      alt={guide.name}
+                      className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 object-cover aspect-square"
+                    />
+                  </Link>
+                  <div className="space-y-4 text-center divide-y dark:divide-gray-700">
+                    <div className="my-2 space-y-1">
+                      <h2 className="text-xl font-semibold sm:text-base">
+                        {guide.name}
+                      </h2>
+                      <p className="px-5 text-base sm:text-base dark:text-gray-400">
+                        {guide.role}
+                      </p>
+                    </div>
+                    <div className="flex justify-center pt-2 space-x-4 align-center">
+                      <Link className="p-2 rounded-md dark:text-gray-100 hover:dark:text-blue-400">
+                        <FaGithub />
+                      </Link>
+                      <Link className="p-2 rounded-md dark:text-gray-100 hover:dark:text-blue-400">
+                        <FaFacebook />
+                      </Link>
+                      <Link className="p-2 rounded-md dark:text-gray-100 hover:dark:text-blue-400">
+                        <FaTwitter />
+                      </Link>
+                      <Link className="p-2 rounded-md dark:text-gray-100 hover:dark:text-blue-400">
+                        <FaInstagram />
+                      </Link>
+                      <Link className="p-2 rounded-md dark:text-gray-100 hover:dark:text-blue-400">
+                        <FaEnvelope />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
