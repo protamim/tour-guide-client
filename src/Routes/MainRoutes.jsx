@@ -12,6 +12,7 @@ import TourGuideProfile from "../Pages/Dashboard/TourGuideDash/TourGuideProfile/
 import TouristProfile from "../Pages/Dashboard/TouristDash/TouristProfile/TouristProfile";
 import AddPackage from "../Pages/Dashboard/AdminDash/AddPackage/AddPackage";
 import PackageDetails from "../Pages/PackageDetails/PackageDetails";
+import TourGuideSinglePage from "../Pages/TourGuideSinglePage/TourGuideSinglePage";
 
 
 
@@ -37,6 +38,11 @@ const MainRoutes = createBrowserRouter([
                 path: '/package-details/:id',
                 element: <PackageDetails />,
                 loader: ({params})=> fetch(`http://localhost:4000/packages/${params.id}`)
+            },
+            {
+                path: '/tour-guide/:id',
+                element: <TourGuideSinglePage />,
+                loader: ({params}) => fetch(`http://localhost:4000/users/tour-guide/${params.id}`)
             }
         ]
     },

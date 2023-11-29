@@ -116,7 +116,7 @@ const PackageDetails = () => {
                   key={guide._id}
                   className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100"
                 >
-                  <Link to={"#"}>
+                  <Link to={`/tour-guide/${guide._id}`}>
                     <img
                       src={
                         guide.photoURL
