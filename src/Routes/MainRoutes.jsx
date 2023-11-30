@@ -13,6 +13,7 @@ import TouristProfile from "../Pages/Dashboard/TouristDash/TouristProfile/Touris
 import AddPackage from "../Pages/Dashboard/AdminDash/AddPackage/AddPackage";
 import PackageDetails from "../Pages/PackageDetails/PackageDetails";
 import TourGuideSinglePage from "../Pages/TourGuideSinglePage/TourGuideSinglePage";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 
@@ -36,13 +37,13 @@ const MainRoutes = createBrowserRouter([
             },
             {
                 path: '/package-details/:id',
-                element: <PackageDetails />,
-                loader: ({params})=> fetch(`http://localhost:4000/packages/${params.id}`)
+                element: <ProtectedRoute><PackageDetails /></ProtectedRoute>,
+                loader: ({params})=> fetch(`https://bhraman-server.vercel.app/packages/${params.id}`)
             },
             {
                 path: '/tour-guide/:id',
                 element: <TourGuideSinglePage />,
-                loader: ({params}) => fetch(`http://localhost:4000/users/tour-guide/${params.id}`)
+                loader: ({params}) => fetch(`https://bhraman-server.vercel.app/users/tour-guide/${params.id}`)
             }
         ]
     },

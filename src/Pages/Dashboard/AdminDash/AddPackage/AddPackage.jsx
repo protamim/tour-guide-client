@@ -10,7 +10,7 @@ const AddPackage = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    axios.post('http://localhost:4000/packages', data)
+    axios.post('https://bhraman-server.vercel.app/packages', data)
     .then(res => {
       console.log(res);
       if(res.data.insertedId){

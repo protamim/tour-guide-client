@@ -10,7 +10,7 @@ const OurPackages = () => {
   const {data: packages= [], isLoading} = useQuery({
     queryKey: ['packages'],
     queryFn: async ()=> {
-      const result = await axios.get('http://localhost:4000/packages')
+      const result = await axios.get('https://bhraman-server.vercel.app/packages')
       return result.data;
     }
   })

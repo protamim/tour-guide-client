@@ -3,6 +3,7 @@ import NavLinks from "./NavLinks";
 import NavButton from "./NavButton";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
@@ -23,7 +24,7 @@ const Navbar = () => {
               <NavLinks />
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">Bhraman Guide</a>
+          <Link to={'/'} className="btn btn-ghost text-xl">Bhraman Guide</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
