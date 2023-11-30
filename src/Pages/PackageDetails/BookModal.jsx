@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import {
   TEInput,
   TEModal,
@@ -9,14 +10,59 @@ import {
   TERipple,
   TESelect,
 } from "tw-elements-react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const BookModal = ({
   showVerticalyCenteredModal,
   setShowVerticalyCenteredModal,
   packageName,
   price,
-  tourGuide,
 }) => {
+  const tourGuide = [
+    { text: "Tour Guide", value: 1 },
+    { text: "Zakaria Solaimani", value: 2 },
+    { text: "Sheikh Nazrul", value: 3 },
+  ];
+const axiosPublic = useAxiosPublic();
+  const handleBooking = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const tourist_name = form.tourist_name.value;
+    const tourist_email = form.tourist_email.value;
+    const photo_url = form.photo_url.value;
+    const price = form.price.value;
+    const package_name = form.package_name.value;
+    
+    const bookingInfo = {
+      tourist_name: tourist_name,
+      tourist_email: tourist_email,
+      photo_url: photo_url,
+      price: price,
+      package_name: package_name,
+    }
+    console.log(bookingInfo); 
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, book it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic.post('/booking', bookingInfo)
+        .then(res => {
+          if(res.data.insertedId){
+            Swal.fire({
+              title: "Booked!",
+              text: "The Package has been booked.",
+              icon: "success"
+            });
+          }
+        })
+      }
+    });
+  }
 
   return (
     <>
@@ -30,7 +76,7 @@ const BookModal = ({
             <TEModalHeader>
               {/* <!--Modal title--> */}
               <h5 className="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200">
-                Modal title
+                My Booking
               </h5>
               {/* <!--Close button--> */}
               <button
@@ -57,9 +103,8 @@ const BookModal = ({
             </TEModalHeader>
             {/* <!--Modal body--> */}
             <TEModalBody>
-              <p>This is a vertically centered modal.</p>
               <div className="block w-full rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                <form>
+                <form onSubmit={handleBooking}>
                   {/* <!--Name input--> */}
                   <TEInput
                     type="text"
@@ -93,26 +138,26 @@ const BookModal = ({
                   {/* <!--Package Name --> */}
                   <TEInput
                     type="text"
-                    label="Price"
+                    label="Package Name"
                     className="mb-6"
-                    name="price"
+                    name="package_name"
                     value={packageName}
                     readOnly
                   ></TEInput>
                   {/* Tour Guide */}
                   <div className="flex justify-center">
-                    <div className="relative mb-3 md:w-96 pt-5">
-                      <TESelect data={tourGuide} />
+                    <div className="relative mb-3 w-full ">
+                      <TESelect name="guide_name" data={tourGuide} />
                     </div>
                   </div>
 
                   {/* <!--Submit button--> */}
-                  <TERipple rippleColor="light" className="w-full">
+                  <TERipple rippleColor="light" className="w-full mt-6">
                     <button
-                      type="button"
+                      type="submit"
                       className="inline-block rounded w-full bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
                     >
-                      Send
+                      Book Now
                     </button>
                   </TERipple>
                 </form>
