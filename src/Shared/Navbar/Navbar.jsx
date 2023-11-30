@@ -26,7 +26,7 @@ const Navbar = () => {
           </div>
           <Link to={'/'} className="btn btn-ghost text-xl">Bhraman Guide</Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-center lg:flex">
           <ul className="menu menu-horizontal px-1">
             <NavLinks />
           </ul>
