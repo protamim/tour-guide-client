@@ -5,7 +5,7 @@ const Stories = () => {
     <>
       <section className="mb-16">
         <div className="container mx-auto px-5">
-          <h3>Trending Stories</h3>
+          <h3 className="text-3xl font-medium mb-4">Trending Stories</h3>
           <div>
             <div className="block w-60 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
               <TERipple className="w-full object-cover">
