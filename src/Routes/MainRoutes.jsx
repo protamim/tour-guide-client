@@ -14,6 +14,9 @@ import AddPackage from "../Pages/Dashboard/AdminDash/AddPackage/AddPackage";
 import PackageDetails from "../Pages/PackageDetails/PackageDetails";
 import TourGuideSinglePage from "../Pages/TourGuideSinglePage/TourGuideSinglePage";
 import ProtectedRoute from "./ProtectedRoute";
+import MyBooking from "../Pages/Dashboard/TouristDash/MyBooking/MyBooking";
+import MyWishList from "../Pages/Dashboard/TouristDash/MyWishList/MyWishList";
+import AssignedTours from "../Pages/Dashboard/TourGuideDash/AssignedTours/AssignedTours";
 
 
 
@@ -71,7 +74,7 @@ const MainRoutes = createBrowserRouter([
             },
             {
                 path: '/dashboard/my-assigned-tours',
-                element: <h3>My assigned Tours</h3>
+                element: <AssignedTours />
             },
             // Tourist Dashboard routes
             {
@@ -80,11 +83,11 @@ const MainRoutes = createBrowserRouter([
             },
             {
                 path: '/dashboard/my-booking',
-                element: <h2>My Booking</h2>
+                element: <MyBooking />
             },
             {
                 path: '/dashboard/my-wishlist',
-                element: <h2>My Wishlist</h2>
+                element: <MyWishList />
             },
         ]
     }

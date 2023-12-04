@@ -14,7 +14,11 @@ const TourGuideProfile = () => {
   console.log(user);
   return (
     <>
-      <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100">
+    {/* Tour Guide Profile */}
+    <div className="mt-5">
+        <h3 className="text-2xl font-semibold">My Profile</h3>
+      </div>
+      <div className="my-10 flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100">
         <img
           src={user?.photoURL}
           alt=""
@@ -48,6 +52,42 @@ const TourGuideProfile = () => {
           </div>
         </div>
       </div>
+      {/* Profile form */}
+      <div className="mb-5">
+        <h3 className="text-2xl font-semibold">Add Tour Guide</h3>
+      </div>
+      <div className="w-full px-4 py-4 shadow-2xl bg-base-100">
+      <form className="grid gap-5 grid-cols-2">
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Guide Name</span>
+          </label>
+          <input type="text" placeholder="Guide Name" className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Profile Photo</span>
+          </label>
+          <input type="url" placeholder="Photo URL" className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Email</span>
+          </label>
+          <input type="email" placeholder="Email" className="input input-bordered" required />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Phone Number</span>
+          </label>
+          <input type="text" placeholder="Phone Number" className="input input-bordered" required />
+        </div>
+        
+        <div className="form-control col-span-2 mt-6">
+          <button className="btn btn-primary">Add Guide</button>
+        </div>
+      </form>
+    </div>
     </>
   );
 };

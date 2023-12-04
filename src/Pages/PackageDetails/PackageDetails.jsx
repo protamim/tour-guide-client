@@ -9,20 +9,25 @@ import {
 } from "react-icons/fa";
 import Loading from "../../components/Loading";
 import { TERipple } from "tw-elements-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import BookModal from "./BookModal";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const PackageDetails = () => {
   const [showVerticalyCenteredModal, setShowVerticalyCenteredModal] =
     useState(false);
   const data = useLoaderData();
   const { users, isLoading } = useLoadUsers();
+  const {user} = useContext(AuthContext);
   // Loading
   if (isLoading) {
     return <Loading />;
   }
-  console.log(data);
+  // console.log(data);
   const tourGuide = users.filter((guide) => guide.role === "tour guide");
+  const [currentUser] = users.filter(current => current.email === user.email);
+  // console.log(currentUser);
+  console.log(data);
   
 
   return (
@@ -35,7 +40,7 @@ const PackageDetails = () => {
               <h2 className="mb-6 text-3xl">{data.title}</h2>
               <div className="flex gap-6">
                 <div className="flex-1">
-                  <img src={data.image} alt="" />
+                  <img src={data.image} alt={data.title} />
                 </div>
                 <div className="space-y-5">
                   <h4 className="text-xl font-medium">{data.duration}</h4>
@@ -46,6 +51,7 @@ const PackageDetails = () => {
                   <span className="text-sm">(price per person)</span>
 
                   {/* <!-- Button trigger vertically centered modal--> */}
+                  {!currentUser?.role ? 
                   <TERipple rippleColor="white" style={{display:'block'}}>
                     <button
                       onClick={() => setShowVerticalyCenteredModal(true)}
@@ -54,6 +60,15 @@ const PackageDetails = () => {
                       Book Now
                     </button>
                   </TERipple>
+                  : <TERipple rippleColor="white" style={{display:'block'}}>
+                  <button
+                    onClick={() => setShowVerticalyCenteredModal(true)}
+                    disabled
+                    className="block pointer-events-none rounded bg-success px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]"
+                  >
+                    Book Now
+                  </button>
+                </TERipple>}
                   {/* Modal */}
                   <BookModal tourGuide={tourGuide} packageName={data.title} price={data.price} showVerticalyCenteredModal={showVerticalyCenteredModal} setShowVerticalyCenteredModal={setShowVerticalyCenteredModal} />
                 </div>

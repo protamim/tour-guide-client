@@ -1,10 +1,15 @@
 import { TERipple } from "tw-elements-react";
-import sundarban from "../../../assets/images/tour-packages/sundarban.jpg";
 import WishIcon from "./WishIcon";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../../../components/Loading";
+import useLoadUsers from "../../../Hooks/useLoadUsers";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
+
 
 const OurPackages = () => {
   const {data: packages= [], isLoading} = useQuery({
@@ -14,9 +19,37 @@ const OurPackages = () => {
       return result.data;
     }
   })
-  console.log(packages);
-  if(isLoading){
+  // console.log(packages);
+  const {users, loading} = useLoadUsers();
+  const {user} = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  
+
+  if(isLoading && loading){
     return <Loading />
+  }
+  const [currentUser] = users.filter(current => current.email === user?.email);
+  console.log(currentUser);
+
+  const handleWishList = (packageName)=> {
+    const wishInfo = {
+      packageName: packageName,
+      tourist_email: currentUser?.email,
+    }
+    // Insert to database
+    axiosPublic.post('/wishlist', wishInfo)
+    .then(res => {
+      if(res.data.insertedId){
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Added to your wishlist",
+          showConfirmButton: false,
+          timer: 1500
+        }); 
+      }
+      console.log(res.data);
+    }).catch(err => console.error(err))
   }
   
   return (
@@ -26,7 +59,10 @@ const OurPackages = () => {
         {packages.map(pkg => <div key={pkg._id} className="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
           <div className="relative">
             <img className="rounded-t-lg h-72 w-full" src={pkg.image} alt={pkg.title} />
-            <WishIcon />
+           {/* WishList Icon */}
+           <div onClick={()=>handleWishList(pkg.title)}>
+           <WishIcon />
+           </div>
           </div>
           <div className="p-6 space-y-2">
             <p className="text-base">Adventure Tours</p>

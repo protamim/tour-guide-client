@@ -5,6 +5,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GoogleAuthProvider } from "firebase/auth";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Login = () => {
   const provider = new GoogleAuthProvider();
@@ -13,19 +14,31 @@ const Login = () => {
   const { logIn, socialSignIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-
-  // const hideShow = () => {
-  //   setShowPass(!showPass);
-  // };
+  const axiosPublic = useAxiosPublic();
 
   const googleSignIn = (provider) => {
     socialSignIn(provider)
-      .then(() => {
-        setSignInSuccess("Signed in successfully!");
-        setSignInErr("");
-        navigate(location?.state ? location.state : "/");
-      })
-      .catch((err) => {
+      .then((res) => {
+        const userInfo = {
+          email: res?.user?.email,
+          name: res?.user?.displayName,
+          photoURL: res?.user?.photoURL,
+        }
+        axiosPublic.patch('/users', userInfo)
+        .then(result => {
+          if(result.data?.modifiedCount===0){
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "You're logged in by google",
+              showConfirmButton: false,
+              timer: 1500
+            }); 
+            navigate(location?.state ? location.state : "/");
+          }
+          console.log(result);
+        })
+      }).catch((err) => {
         setSignInErr(err.message);
         setSignInSuccess("");
       });
@@ -39,20 +52,19 @@ const Login = () => {
     console.log(email, password);
 
     logIn(email, password)
-      .then((res) => {
-        setSignInSuccess("Signed in successfully!");
-        setSignInErr("");
-        navigate(location?.state ? location.state : "/");
-        console.log(res);
+      .then(() => {
         Swal.fire({
-          text: "Login successed!",
+          position: "center",
           icon: "success",
-        });
+          title: "You're logged in successfully!",
+          showConfirmButton: false,
+          timer: 1500
+        }); 
+        navigate(location?.state ? location.state : "/");
       })
-      .catch((err) => {
+      .catch(() => {
         setSignInErr("Invalid login credentials");
         setSignInSuccess("");
-        console.log(err);
       });
   };
 

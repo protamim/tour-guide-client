@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import {
   TEInput,
@@ -11,6 +11,10 @@ import {
   TESelect,
 } from "tw-elements-react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const BookModal = ({
   showVerticalyCenteredModal,
@@ -18,12 +22,14 @@ const BookModal = ({
   packageName,
   price,
 }) => {
+  const {user} = useContext(AuthContext);
   const tourGuide = [
     { text: "Tour Guide", value: 1 },
     { text: "Zakaria Solaimani", value: 2 },
     { text: "Sheikh Nazrul", value: 3 },
   ];
-const axiosPublic = useAxiosPublic();
+  const [startDate, setStartDate] = useState(new Date());
+  const axiosPublic = useAxiosPublic();
   const handleBooking = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -32,37 +38,41 @@ const axiosPublic = useAxiosPublic();
     const photo_url = form.photo_url.value;
     const price = form.price.value;
     const package_name = form.package_name.value;
-    
+    const guide_name = form.guide_name.value;
+    const tour_date = form.tour_date.value;
+
     const bookingInfo = {
       tourist_name: tourist_name,
       tourist_email: tourist_email,
       photo_url: photo_url,
       price: price,
       package_name: package_name,
-    }
-    console.log(bookingInfo); 
+      guide_name: guide_name,
+      tour_date: tour_date
+    };
+    console.log(bookingInfo);
     Swal.fire({
       title: "Are you sure?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, book it!"
+      confirmButtonText: "Yes, book it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosPublic.post('/booking', bookingInfo)
-        .then(res => {
-          if(res.data.insertedId){
+        axiosPublic.post("/booking", bookingInfo).then((res) => {
+          if (res.data.insertedId) {
             Swal.fire({
               title: "Booked!",
               text: "The Package has been booked.",
-              icon: "success"
+              icon: "success",
             });
           }
-        })
+          console.log(res.data);
+        });
       }
     });
-  }
+  };
 
   return (
     <>
@@ -110,6 +120,7 @@ const axiosPublic = useAxiosPublic();
                     type="text"
                     label="Name"
                     name="tourist_name"
+                    value={user?.displayName}
                     className="mb-6"
                   ></TEInput>
                   {/* <!--E-mail input--> */}
@@ -117,6 +128,7 @@ const axiosPublic = useAxiosPublic();
                     type="email"
                     label="Email Address"
                     className="mb-6"
+                    value={user?.email}
                     name="tourist_email"
                   ></TEInput>
                   {/* <!--Photo URL--> */}
@@ -124,6 +136,7 @@ const axiosPublic = useAxiosPublic();
                     type="url"
                     label="Photo URL"
                     className="mb-6"
+                    value={user?.photoURL}
                     name="photo_url"
                   ></TEInput>
                   {/* <!--Price --> */}
@@ -145,12 +158,21 @@ const axiosPublic = useAxiosPublic();
                     readOnly
                   ></TEInput>
                   {/* Tour Guide */}
-                  <div className="flex justify-center">
-                    <div className="relative mb-3 w-full ">
-                      <TESelect name="guide_name" data={tourGuide} />
-                    </div>
+                  <select name="guide_name" className="w-full border px-2 py-1 border-gray-200">
+                    {tourGuide?.map((guide, index) => (
+                      <option key={index}>{guide.text}</option>
+                    ))}
+                  </select>
+                  {/* Date Picker */}
+                  <div className="mt-5">
+                  <DatePicker className="w-full border-gray-200 border"
+                    name="tour_date"
+                    showIcon
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                  />
                   </div>
-
+                  
                   {/* <!--Submit button--> */}
                   <TERipple rippleColor="light" className="w-full mt-6">
                     <button

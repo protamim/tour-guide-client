@@ -1,5 +1,4 @@
 import { FaRegHeart } from "react-icons/fa";
-
 const WishIcon = () => {
   return (
     <>
