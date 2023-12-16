@@ -6,12 +6,12 @@ import MeetGuides from "./MeetGuides";
 const TravelGuide = () => {
   return (
     <>
-      <section className="my-16">
+      <section className="mt-7 md:mt-11">
         <div className="container mx-auto px-5">
-          <h2 className="text-3xl">Tourism and Travel Guide</h2>
-          <div className="">
+          <h2 className="text-2xl md:text-3xl mb-5">Tourism and Travel Guide</h2>
+          <div>
             <Tabs>
-              <TabList>
+              <TabList className="flex gap-5 flex-wrap mb-5">
                 <Tab>Overview</Tab>
                 <Tab>Our Packages</Tab>
                 <Tab>Meet Our Tour Guides</Tab>
@@ -20,7 +20,7 @@ const TravelGuide = () => {
               <TabPanel>
                 <div>
                   <iframe
-                    className="w-full h-[28rem]"
+                    className="w-full md:h-[28rem]"
                     src="https://www.youtube.com/embed/JLjvEYMBGzQ?si=SvlsZoUdQY93C6XL"
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

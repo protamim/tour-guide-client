@@ -18,7 +18,7 @@ import slide5 from '../../../assets/images/banner/slide5.jpg'
 const Banner = () => {
   return (
     <>
-    <section>
+    <section className="mt-5">
       <Swiper
        autoplay={{
         delay: 2500,
@@ -26,7 +26,6 @@ const Banner = () => {
       }}
         effect={"fade"}
         modules={[EffectFade, Autoplay]}
-        className="h-[30rem]"
       >
         <SwiperSlide>
           <img className="w-full" src={slide1} />

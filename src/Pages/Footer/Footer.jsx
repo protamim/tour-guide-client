@@ -4,7 +4,7 @@ import { TEInput, TERipple } from "tw-elements-react";
 const Footer = () => {
   return (
     <>
-      <footer className="bg-secondary-100 text-center dark:bg-secondary-600">
+      <footer className="mt-10 bg-secondary-100 text-center dark:bg-secondary-600">
         {/* <!--Sign-up form section--> */}
         <div className="px-6 pt-6">
           <form action="">
