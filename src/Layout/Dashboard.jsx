@@ -22,9 +22,9 @@ const Dashboard = () => {
     <>
       <section>
         <div className="container mx-auto px-5">
-          <div className="grid grid-cols-12 gap-8">
+          <div className="flex gap-8">
             {/* Side bar */}
-            <div className="col-span-3 bg-indigo-500 min-h-screen pt-6">
+            <div className="w-3/12 bg-indigo-500 min-h-screen pt-6">
 
               {/* Admin Dashboard */}
               {currentUser?.role === "admin" && (
@@ -56,7 +56,7 @@ const Dashboard = () => {
 
             </div>
             {/* Dashboard content */}
-            <div className="col-span-9">
+            <div className="w-9/12">
               <Outlet />
             </div>
           </div>

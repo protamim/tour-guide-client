@@ -34,13 +34,13 @@ const PackageDetails = () => {
     <>
       <section className="my-16">
         <div className="container mx-auto px-5">
-          <div className="grid gap-8 grid-cols-12">
+          <div className="flex flex-col md:flex-row gap-10">
             {/* Main Content */}
-            <div className="col-span-8">
-              <h2 className="mb-6 text-3xl">{data.title}</h2>
-              <div className="flex gap-6">
+            <div className="md:w-3/4">
+              <h2 className="mb-6 sm:text-2xl md:text-3xl">{data.title}</h2>
+              <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-1">
-                  <img src={data.image} alt={data.title} />
+                  <img className="w-full" src={data.image} alt={data.title} />
                 </div>
                 <div className="space-y-5">
                   <h4 className="text-xl font-medium">{data.duration}</h4>
@@ -75,7 +75,7 @@ const PackageDetails = () => {
               </div>
               {/* Tour Plan */}
               <div className="my-10">
-                <h2 className="text-2xl mb-5">:: Tour Plan ::</h2>
+                <h2 className="text-xl mb-5">:: Tour Plan ::</h2>
                 <p>{data.about_tour}</p>
               </div>
               <div className="space-y-3">
@@ -137,13 +137,13 @@ const PackageDetails = () => {
               </div>
             </div>
             {/* right sidebar */}
-            <div className="col-span-4 flex gap-8 items-end flex-col">
+            <div className="md:w-1/4 flex gap-8 items-center md:items-end flex-col">
               <h3 className="text-xl">Contact With Tour Guides</h3>
               {/* Tour Guide Profle */}
               {tourGuide.map((guide) => (
                 <div
                   key={guide._id}
-                  className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100"
+                  className="flex flex-col justify-center md:max-w-xs p-6 shadow-md rounded-xl dark:bg-gray-900 dark:text-gray-100"
                 >
                   <Link to={`/tour-guide/${guide._id}`}>
                     <img
@@ -158,7 +158,7 @@ const PackageDetails = () => {
                   </Link>
                   <div className="space-y-4 text-center divide-y dark:divide-gray-700">
                     <div className="my-2 space-y-1">
-                      <h2 className="text-xl font-semibold sm:text-base">
+                      <h2 className="text-sm md:text-xl font-semibold sm:text-base">
                         {guide.name}
                       </h2>
                       <p className="px-5 text-base sm:text-base dark:text-gray-400">
